@@ -33,12 +33,7 @@ while true; do
       AFTER_FLASHING=loop
       shift
       ;;
-    -u)
-      BUILDROOT_OUTPUT_DIR="${2}"
-      shift
-      shift
-      ;;
-    --stage)
+        --stage)
         if [ "${2}" -ge 0 -a "${2}" -le $NUM_STAGES ]; then
             echo "Enabling stage ${2}"
             stage[${2}]=true
@@ -266,10 +261,10 @@ else
 
         log "== waiting for fastboot =="
         if wait_for_fastboot ${FASTBOOT_PORT}; then
-            fastboot ${FASTBOOT_PORT} -i 0x1f3a -u flash UBI ${SPARSE_UBI} > /dev/null
+            fastboot ${FASTBOOT_PORT} flash UBI ${SPARSE_UBI} > /dev/null
             assert_error 134
 
-            fastboot ${FASTBOOT_PORT} -i 0x1f3a continue > /dev/null
+            fastboot ${FASTBOOT_PORT} continue > /dev/null
             assert_error 135
         else
             exit 1
